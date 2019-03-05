@@ -1,19 +1,13 @@
-/* ntzfind 3.1
-** A spaceship search program by "zdr" with modifications by Matthias Merzenich and Aidan Pierce and Tomas Rokicki
-**
-** Warning: this program uses a lot of memory (especially for wide searches).
-*/
 
-/* define or undef KNIGHT to include knight support */
-#define KNIGHT
-
-#include <stdio.h>
+#include <stdio.h>  // ntzfind 3.1
 #include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
+#include <stdint.h> // A spaceship search program by "zdr" with modifications
+#include <string.h> // by Matthias Merzenich, Aidan Pierce, and Tomas Rokicki
 #include <time.h>
-#include <random>
-#include "tab.cpp"
+#include <random>   // Warning: this program uses a lot of memory (especially
+#include "tab.cpp"  // for wide searches).
+
+#define KNIGHT /* define or undef KNIGHT to include knight support */
 
 #define BANNER "ntzfind 3.0 by \"zdr\", Matthias Merzenich, Aidan Pierce, and Tomas Rokicki, 24 February 2018"
 #define FILEVERSION ((unsigned long) 2016122101)  //yyyymmddnn, same as last qfind release (differs from the above)
@@ -43,6 +37,14 @@
 #define SYM_ODD 2
 #define SYM_EVEN 3
 #define SYM_GUTTER 4
+
+///bin/cat /dev/null; echo 'Compiling...'
+///bin/cat /dev/null; sourcename="$0"
+///bin/cat /dev/null; exename="${sourcename%.*}"
+///bin/cat /dev/null; g++ -std=c++11 -O3 -march=native -Wall -Wextra "$sourcename" -o "$exename"
+///bin/cat /dev/null; echo '...compiled.'
+///bin/cat /dev/null; "$exename" "$@"; status=$?
+///bin/cat /dev/null; exit $status
 
 const char *rule = "B3/S23" ;
 
@@ -1043,7 +1045,7 @@ void usage(){
    printf("%s\n",BANNER);
    printf("\n");
    printf("Usage: \"zfind options\"\n");
-   printf("  e.g. \"zfind B3/S23 p3 k1 w6 v\" searches Life (rule B3/S23) for\n");
+   printf("  e.g. \"./ntzfind.cpp B3/S23 p3 k1 w6 v\" searches Life (rule B3/S23) for\n");
    printf("  c/3 orthogonal spaceships with even bilateral symmetry and a\n");
    printf("  search width of 6 (full width 12).\n");
    printf("\n");
@@ -1120,7 +1122,7 @@ int main(int argc, char *argv[]){
    int skipNext = 0;
    int div1,div2;
    int s;
-   if(argc == 2 && !strcmp(argv[1],"c")){
+   if ((argc == 1) || (argc == 2 && !strcmp(argv[1],"c"))) {
       usage();
       return 0;
    }
